@@ -1,7 +1,7 @@
 Classification_level,svg_id,plot_title,filter,col_t,col_y,col_se,y_label,group_by,csv_url,direct_path,skip_lines
-Biodiversity,biodiversity-icon,Reef fish Richness,NA,year,richness,NA,Species Richness,protected_status,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/domain_div.csv,info-fk/prep/data/domain_div.csv,
-Biodiversity,biodiversity-icon,Reef fish Shannon Diversity,NA,year,shannon,NA,Shannon diversity,protected_status,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/domain_div.csv,info-fk/prep/data/domain_div.csv,
-Biodiversity,biodiversity-icon,Reef fish Simpson Diversity,NA,year,simpson,NA,Simpson diversity,protected_status,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/domain_div.csv,info-fk/prep/data/domain_div.csv,
+Biodiversity,biodiversity-icon,Reef fish Richness,NA,YEAR,richness,NA,Species Richness,protected_status,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/domain_div.csv,info-fk/prep/data/domain_div.csv,
+Biodiversity,biodiversity-icon,Reef fish Shannon Diversity,NA,YEAR,shannon,NA,Shannon diversity,protected_status,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/domain_div.csv,info-fk/prep/data/domain_div.csv,
+Biodiversity,biodiversity-icon,Reef fish Simpson Diversity,NA,YEAR,simpson,NA,Simpson diversity,protected_status,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/domain_div.csv,info-fk/prep/data/domain_div.csv,
 Biodiversity,biodiversity-icon,Stony coral richness,NA,Year,richness,NA,Species Richness,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/coral_div.csv,info-fk/prep/data/coral_div.csv,
 Biodiversity,biodiversity-icon,Stony coral Shannon diveristy ,NA,Year,shannon,NA,Shannon diversity,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/coral_div.csv,info-fk/prep/data/coral_div.csv,
 Biodiversity,biodiversity-icon,Stony coral Simpson diversity,NA,Year,simpson,NA,Simpson diversity,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/coral_div.csv,info-fk/prep/data/coral_div.csv,
