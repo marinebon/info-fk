@@ -1,0 +1,50 @@
+---
+title: "fk_ggplot_example"
+author: "Megan Hepner"
+date: "August 31, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+library(tidyverse)
+
+domain_div = read_csv("prep/data/domain_div.csv")
+
+div_plot = ggplot(domain_div, aes(x=YEAR, y=simpson, colour=factor(protected_status), group=factor(protected_status)))+
+  geom_line(aes(group=protected_status),lwd=1) +
+  geom_point(size=3) +
+  labs(title= "Reef Fish Simpson Diversity", x="Year", y="Effective Number of Species", colour = NULL)+
+  scale_colour_manual(
+    values =  c("red","blue"),
+    #breaks = c("1", "0"), 
+    labels=c("Protected","Not Protected"))+
+  scale_x_continuous(limits = c(1999, 2016), breaks = c(2000,2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016), labels=c("2000","","2004","","2008","","2012","","2016"))+
+  theme_bw()+
+  theme(
+      legend.position="right",
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      axis.title.x=element_text(size=12),
+      axis.title.y=element_text(size=12),
+      title=element_text(size=12))
+
+grouper_snapper_abun = read_csv("prep/data/rvc_trophic_groups/snapper_grouper_abun.csv")
+
+gs_example = ggplot(grouper_snapper_abun,aes(x=YEAR,y=abundance_mean))+ #shape=STRAT
+  geom_line() +
+  geom_point(size=3) +
+  geom_errorbar(aes(ymax=abundance_mean+abundance_se,ymin=abundance_mean-abundance_se),width=0.1)+
+  labs(title= "Grouper-Snapper Abundance", x="Year", y="Mean abundance")+
+  scale_x_continuous(limits = c(1999, 2016), breaks = c(2000,2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016), labels=c("2000","","2004","","2008","","2012","","2016"))+
+  theme_bw()+
+  theme(
+      legend.position="none", 
+      panel.grid.major=element_blank(),
+      panel.grid.minor=element_blank(),
+      axis.title.x=element_text(size=12),
+      axis.title.y=element_text(size=12),
+      title=element_text(size=12))
+
+
+```
