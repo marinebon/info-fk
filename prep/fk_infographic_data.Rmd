@@ -566,36 +566,16 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
   grouper_bio = read_csv("prep/data/rvc_trophic_groups/grouper_bio.csv")
   
   snapper_grouper_bio = rbind(snapper_bio,seabass_bio,hogfish_bio,grouper_bio) #1999-2016 
-  
-  snapper_grouper_bio = snapper_grouper_bio %>%
-      group_by(YEAR) %>%
-      summarize(
-        biomass_mean = mean(biomass),
-        biomass_n = length(biomass),
-        biomass_sd = sd(biomass),
-        biomass_se = biomass_sd / sqrt(biomass_n),
-        biomass_min = min(biomass),
-        biomass_max = max(biomass))
-    write_csv(snapper_grouper_bio, "prep/data/rvc_trophic_groups/snapper_grouper_bio.csv")
+  write_csv(snapper_grouper_bio, "prep/data/rvc_trophic_groups/snapper_grouper_bio.csv")
 
   #density data 
-  snapper_den = read_csv("prep/data/rvc_trophic_groups/snapper_fk_den.csv")
-  seabass_den = read_csv("prep/data/rvc_trophic_groups/seabass_fk_den.csv")
-  hogfish_den = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_den.csv")
-  grouper_den = read_csv("prep/data/rvc_trophic_groups/grouper_fk_den.csv")
+  snapper_den = read_csv("prep/data/rvc_trophic_groups/snapper_den.csv")
+  seabass_den = read_csv("prep/data/rvc_trophic_groups/seabass_den.csv")
+  hogfish_den = read_csv("prep/data/rvc_trophic_groups/hogfish_den.csv")
+  grouper_den = read_csv("prep/data/rvc_trophic_groups/grouper_den.csv")
   
   snapper_grouper_den = rbind(snapper_den,seabass_den,hogfish_den,grouper_den) #1999-2016 
-  
-  snapper_grouper_den = snapper_grouper_den %>%
-      group_by(YEAR) %>%
-      summarize(
-        density_mean = mean(density),
-        density_n = length(density),
-        density_sd = sd(density),
-        density_se = density_sd / sqrt(density_n),
-        density_min = min(density),
-        density_max = max(density))
-    write_csv(snapper_grouper_den, "prep/data/rvc_trophic_groups/snapper_grouper_den.csv")
+  write_csv(snapper_grouper_den, "prep/data/rvc_trophic_groups/snapper_grouper_den.csv")
     
   #diversity data 
   snapper_diversity = read_csv("prep/data/rvc_trophic_groups/snapper_fk_diversity.csv")
@@ -603,34 +583,9 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
   hogfish_diversity = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_diversity.csv")
   grouper_diversity = read_csv("prep/data/rvc_trophic_groups/grouper_fk_diversity.csv")
   
-  snapper_grouper_diversity = rbind(snapper_diversity,seabass_diversity,hogfish_diversity,grouper_diversity) #1999-2016 
-  
-  snapper_grouper_diversity = snapper_grouper_diversity %>%
-    filter(protected_status != "0") %>%
-    filter(protected_status != "1") %>%
-    group_by(YEAR) %>%
-    summarize(
-      richness_mean = mean(richness),
-      richness_n = length(richness),
-      richness_sd = sd(richness),
-      richness_se = richness_sd / sqrt(richness_n),
-      richness_min = min(richness),
-      richness_max = max(richness),
-      simpson_mean = mean(simpson),
-      simpson_n = length(simpson),
-      simpson_sd = sd(simpson),
-      simpson_se = simpson_sd / sqrt(simpson_n),
-      simpson_min = min(simpson),
-      simpson_max = max(simpson),
-      shannon_mean = mean(shannon),
-      shannon_n = length(shannon),
-      shannon_sd = sd(shannon),
-      shannon_se = shannon_sd / sqrt(shannon_n),
-      shannon_min = min(shannon),
-      shannon_max = max(shannon))
-  
-    write_csv(snapper_grouper_diversity, "prep/data/rvc_trophic_groups/snapper_grouper_diversity.csv")  
-}
+  snapper_grouper_diversity = rbind(snapper_diversity,seabass_diversity,hogfish_diversity,grouper_diversity) #1999-2016
+  write_csv(snapper_grouper_diversity, "prep/data/rvc_trophic_groups/snapper_grouper_diversity.csv")  
+
 
 ```
 
