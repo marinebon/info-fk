@@ -1,5 +1,5 @@
 ---
-title: "Prep Infographic Data" 
+title: "Prep Infographic Data"
 author: "Ben Best"
 date: "`r Sys.Date()`"
 output:
@@ -29,13 +29,15 @@ library(stringr)
 
 if ( basename(getwd()) != 'prep' ) setwd('prep')
 
-dir_svg = '../svg'
+dir_svg        = '../svg'
 indicators_csv = '../plot_indicators.csv'
+elements_csv   = '../svg_elements.csv'
 ```
 
 ## Read svg & csv
 
 ### plot_indicators.csv
+`svg_id`s are read from plot_indicators and the number plots for each given `svg_id` is shown
 
 ```{r plot_indicators, message=F}
 # read_csv('https://raw.githubusercontent.com/mhepner90/RVC/master/SDG14/infographic_csv_indicators.csv') %>%
@@ -49,13 +51,13 @@ ind_d %>%
 ```
 
 ### *.svg
-
+`svg_id`s are read from svg files & tabulated
 ```{r svg_elements}
 svg_ids = function(svg){
   ids = read_xml(svg) %>%
     xml_find_all("//svg:g") %>%
     xml_attr('id')
-  
+
   ids = ids[!str_detect(ids, '^g\\d+$')]
   if (length(ids)==0){
     return(NA)
@@ -78,9 +80,22 @@ svg_tbl %>%
   arrange(svg, svg_id)
 ```
 
+### csv_elements.csv
+`svg_id`s are read from csv_elements; n is the # of svg files the svg_id is expected to be in
+
+```{r plot_indicators, message=F}
+elm_d = read_csv(elements_csv)
+
+elm_d %>%
+  group_by(svg_id) %>%
+  summarize(
+    n = n())
+```
+
 ## Check svg_id matches
 
 ### *.svg missing plot_indicators.csv
+named elements from the .svg files without a matching entry in plot_indicators
 
 ```{r svg_elements missing plot_indicators}
 svg_tbl %>%
@@ -111,7 +126,7 @@ ind_d %>%
 
 ### snapper / grouper ?
 
-Here's any svg_id with the word snapper or grouper in it. Isn't this often thought of as the "snapper grouper complex", so should we aggregate these time series? 
+Here's any svg_id with the word snapper or grouper in it. Isn't this often thought of as the "snapper grouper complex", so should we aggregate these time series?
 
 ```{r}
 ind_d %>%
@@ -127,10 +142,9 @@ ind_d %>%
 ```{r, eval=F}
 load_all('../../infographiq') # reload package from source
 
-create_site()
+create_info_site()
 ```
 
 
 
 ...
-
