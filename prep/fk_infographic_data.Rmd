@@ -1449,6 +1449,35 @@ if(!all(file.exists(
     write_csv(lionfish_bio, "prep/data/rvc_trophic_groups/lionfish_bio.csv")
   }
 }
+    #density
+    lionfish_fk_den_psu = getPSUDensity(RVCdata_FK, lionfish_fish_spp_list)
+    
+    lionfish_den_psu = lionfish_fk_den_psu %>%
+      group_by(YEAR) %>%
+      filter(density != "0") %>% 
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
+    write_csv(lionfish_den_psu, "prep/data/rvc_trophic_groups/lionfish_den_psu.csv")
+    
+    #biomass
+    lionfish_fk_bio_psu = getPSUBiomass(RVCdata_FK, lionfish_fish_spp_list, RVCdata_FK$taxonomic_data)
+    
+    lionfish_bio_psu = lionfish_fk_bio_psu %>%
+      group_by(YEAR) %>%
+      filter(biomass != "0") %>% 
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
+    write_csv(lionfish_bio_psu, "prep/data/rvc_trophic_groups/lionfish_bio_psu.csv")
 
 ```
 
