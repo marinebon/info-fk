@@ -1515,13 +1515,6 @@ if(!file.exists("prep/data/rvc_trophic_level/trophic_level_biomass.csv")){
 if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
                     "prep/data/rvc_exploited_species/exploited_bio.csv",
                     "prep/data/rvc_exploited_species/exploited_abun.csv"))){
-  
-  exploited_fk_abun_csv = "prep/data/rvc_exploited_species/exploited_fk_abun.csv"
-  exploited_fk_den_csv  = "prep/data/rvc_exploited_species/exploited_fk_den.csv"
-  exploited_fk_bio_csv  = "prep/data/rvc_exploited_species/exploited_fk_bio.csv"
-  
-}else{ 
-  if(!all(file.exists(exploited_fk_abun_csv, exploited_fk_den_csv, exploited_fk_bio_csv))){
     
     exploited_spp_list= c(
       "CEP CRUE", #Graysby
@@ -1545,14 +1538,20 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
       filter(protected_status != "all") %>%
       mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
                                        ifelse(grepl("1", protected_status), 'Protected', 'IDK')))%>%
-      group_by(YEAR, SPECIES_CD, protected_status) %>%
+      mutate(common_name = recode(
+        SPECIES_CD,
+        'CEP CRUE' = 'Graysby',
+        'EPI ITAJ' = 'Goliath_Grouper',
+        'EPI MORI' = 'Red_Grouper',
+        'EPI STRI' = 'Nassau_Grouper',
+        'LAC MAXI' = 'Hogfish',
+        'LUT ANAL' = 'Mutton_Snapper',
+        'LUT GRIS' = 'Grey_Snapper',
+        'MYC BONA' = 'Black_Grouper',
+        'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
+      group_by(YEAR, common_name, protected_status) %>%
       summarize(
-        density_mean = mean(density),
-        density_n = length(density),
-        density_sd = sd(density),
-        density_se = density_sd / sqrt(density_n),
-        density_min = min(density),
-        density_max = max(density))
+        density_mean = mean(density))
 
     write_csv(exploited_den,"prep/data/rvc_exploited_species/exploited_fk_den.csv")
     
@@ -1562,107 +1561,25 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
     exploited_bio = exploited_fk_bio %>% 
       filter(protected_status != "all")%>% 
     mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
-                                       ifelse(grepl("1", protected_status), 'Protected', 'IDK'))) %>%
-      group_by(YEAR,SPECIES_CD,protected_status) %>%
+                                       ifelse(grepl("1", protected_status), 'Protected', 'IDK'))) %>% 
+      mutate(common_name = recode(
+        SPECIES_CD,
+        'CEP CRUE' = 'Graysby',
+        'EPI ITAJ' = 'Goliath_Grouper',
+        'EPI MORI' = 'Red_Grouper',
+        'EPI STRI' = 'Nassau_Grouper',
+        'LAC MAXI' = 'Hogfish',
+        'LUT ANAL' = 'Mutton_Snapper',
+        'LUT GRIS' = 'Grey_Snapper',
+        'MYC BONA' = 'Black_Grouper',
+        'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
+      group_by(YEAR,common_name,protected_status) %>%
       summarize(
-        biomass_mean = mean(biomass),
-        biomass_n = length(biomass),
-        biomass_sd = sd(biomass),
-        biomass_se = biomass_sd / sqrt(biomass_n),
-        biomass_min = min(biomass),
-        biomass_max = max(biomass))
+        biomass_mean = mean(biomass))
     
     write_csv(exploited_bio,"prep/data/rvc_exploited_species/exploited_fk_bio.csv")
   }
-  
-  exploited_den = read_csv("prep/data/rvc_exploited_species/exploited_den.csv")
-  
-  exploited_density = exploited_den %>%
-    mutate(
-      protected_status = recode(
-        protected_status, '0'='unprotected', '1'='protected'), 
-      common_name = recode(
-        SPECIES_CD,
-        'CEP CRUE' = 'Graysby',
-        'EPI ITAJ' = 'Goliath_Grouper',
-        'EPI MORI' = 'Red_Grouper',
-        'EPI STRI' = 'Nassau_Grouper',
-        'LAC MAXI' = 'Hogfish',
-        'LUT ANAL' = 'Mutton_Snapper',
-        'LUT GRIS' = 'Grey_Snapper',
-        'MYC BONA' = 'Black_Grouper',
-        'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
-    select(YEAR, common_name, protected_status, density) %>%
-    group_by(YEAR, common_name, protected_status) %>%
-    filter(protected_status != "all") %>%
-    mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
-                                       ifelse(grepl("1", protected_status), 'Protected', 'IDK')))%>%
-      group_by(YEAR, protected_status) %>%
-      summarize(
-        density_mean = mean(density),
-        density_n = length(density),
-        density_sd = sd(density),
-        density_se = density_sd / sqrt(density_n),
-        density_min = min(density),
-        density_max = max(density))
-  
-  write_csv(exploited_density, "prep/data/rvc_exploited_species/exploited_den.csv")
-  
-  exploited_bio = read_csv("prep/data/rvc_exploited_species/exploited_fk_bio.csv")
-  
-  exploited_biomass = exploited_bio %>%
-    mutate(
-      protected_status = recode(
-        protected_status, '0'='unprotected', '1'='protected'), 
-      common_name = recode(
-        SPECIES_CD,
-        'CEP CRUE' = 'Graysby',
-        'EPI ITAJ' = 'Goliath_Grouper',
-        'EPI MORI' = 'Red_Grouper',
-        'EPI STRI' = 'Nassau_Grouper',
-        'LAC MAXI' = 'Hogfish',
-        'LUT ANAL' = 'Mutton_Snapper',
-        'LUT GRIS' = 'Grey_Snapper',
-        'MYC BONA' = 'Black_Grouper',
-        'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
-    select(YEAR, common_name, protected_status, biomass) %>%
-    group_by(YEAR, common_name, protected_status) %>%
-    filter(protected_status != "all") %>%
-    group_by(YEAR) %>%
-      summarize(
-        biomass_mean = mean(biomass),
-        biomass_n = length(biomass),
-        biomass_sd = sd(biomass),
-        biomass_se = biomass_sd / sqrt(biomass_n),
-        biomass_min = min(biomass),
-        biomass_max = max(biomass))
-  
-  write_csv(exploited_biomass, "prep/data/rvc_exploited_species/exploited_bio.csv")
-  
-  exploited_abun = read_csv("prep/data/rvc_exploited_species/exploited_fk_abun.csv")
-  
-  exploited_abundance = exploited_abun %>%
-    mutate(
-      protected_status = recode(
-        protected_status, '0'='unprotected', '1'='protected'), 
-      common_name = recode(
-        SPECIES_CD,
-        'CEP CRUE' = 'Graysby',
-        'EPI ITAJ' = 'Goliath_Grouper',
-        'EPI MORI' = 'Red_Grouper',
-        'EPI STRI' = 'Nassau_Grouper',
-        'LAC MAXI' = 'Hogfish',
-        'LUT ANAL' = 'Mutton_Snapper',
-        'LUT GRIS' = 'Grey_Snapper',
-        'MYC BONA' = 'Black_Grouper',
-        'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
-    select(YEAR, common_name, protected_status, abundance) %>%
-    group_by(YEAR, common_name, protected_status) %>%
-    filter(protected_status != "all") 
-  
-  write_csv(exploited_abundance, "prep/data/rvc_exploited_species/exploited_abun.csv")
-  
-}
+
 
 ```
 
