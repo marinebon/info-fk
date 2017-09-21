@@ -275,14 +275,37 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
   grouper_fk_den = getDomainDensity(RVCdata_FK, grouper_spp_list)
   write_csv(grouper_fk_den, "prep/data/rvc_trophic_groups/grouper_fk_den.csv")
   
+  grouper_den = grouper_fk_den %>% 
+    group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
+    write_csv(grouper_den, "prep/data/rvc_trophic_groups/grouper_den.csv")
+  
   #biomass
   grouper_fk_bio = getDomainBiomass(RVCdata_FK, grouper_spp_list, RVCdata_FK$taxonomic_data)
   write_csv(grouper_fk_bio, "prep/data/rvc_trophic_groups/grouper_fk_bio_merged.csv")
   
+  grouper_bio = grouper_fk_bio %>% 
+  group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
+  write_csv(grouper_bio, "prep/data/rvc_trophic_groups/grouper_bio.csv")
+  
   #diversity metrics 
-  grouper_fk_abundance = grouper_fk_abun %>% 
-    select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-    group_by(YEAR, protected_status) %>% 
+  grouper_fk_diversity = grouper_fk_abun %>%
+    filter(protected_status == "all") %>% 
+    select(YEAR, SPECIES_CD, abundance) %>%  
+    group_by(YEAR) %>% 
     nest(-YEAR) %>%  
     mutate(
       data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill =0)), 
@@ -300,9 +323,9 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
         function(x) exp(diversity(x, index = 'shannon')))) %>%
     unnest(richness, simpson, shannon)
   
-  grouper_fk_diversity = grouper_fk_abundance %>%
-    select(YEAR, protected_status, richness, shannon, simpson) 
-  write_csv(grouper_fk_diversity, "prep/data/rvc_trophic_groups/grouper_fk_diversity.csv")
+  grouper_diversity = grouper_fk_diversity %>%
+    select(YEAR, richness, shannon, simpson) 
+  write_csv(grouper_diversity, "prep/data/rvc_trophic_groups/grouper_fk_diversity.csv")
   
   hogfish_spp_list = c("LAC MAXI", "BOD RUFU", "BOD PULC")
   
