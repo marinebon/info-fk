@@ -805,14 +805,38 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/small_reef_fk_abun.csv",
     small_reef_fk_den = getDomainDensity(RVCdata_FK, small_reef_fish_spp_list, merge_protected = F)
     write_csv(small_reef_fk_den, "prep/data/rvc_trophic_groups/small_reef_fk_den.csv")
     
+    small_reef_den = small_reef_fk_den %>%
+      filter(protected_status == "all")%>% 
+      group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
+    write_csv(small_reef_den, "prep/data/rvc_trophic_groups/small_reef_den.csv")
+    
     #biomass
     small_reef_fk_bio = getDomainBiomass(RVCdata_FK, small_reef_fish_spp_list, RVCdata_FK$taxonomic_data)
     write_csv(small_reef_fk_bio, "prep/data/rvc_trophic_groups/small_reef_fk_bio_merged.csv")
     
+    small_reef_bio = small_reef_fk_bio %>%
+      group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
+    write_csv(small_reef_bio, "prep/data/rvc_trophic_groups/small_reef_bio.csv")
+    
     #fk diversity
     small_reef_fk_abundance = small_reef_fk_abun %>% 
-      select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-      group_by(YEAR, protected_status) %>% #48 groups 
+      filter(protected_status == "all") %>% 
+      select(YEAR, SPECIES_CD, abundance) %>%  
+      group_by(YEAR) %>% #48 groups 
       nest(-YEAR) %>%  
       mutate(
         data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
@@ -831,7 +855,7 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/small_reef_fk_abun.csv",
       unnest(richness, simpson, shannon)
     
     small_reef_fk_diversity = small_reef_fk_abundance %>%
-      select(YEAR, protected_status, richness, simpson, shannon) 
+      select(YEAR, richness, simpson, shannon) 
     write_csv(small_reef_fk_diversity, "prep/data/rvc_trophic_groups/small_reef_fk_diversity.csv")
 }
 
@@ -859,14 +883,38 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/higher_reef_fk_abun.csv",
     higher_reef_fk_den = getDomainDensity(RVCdata_FK, higher_reef_spp_list)
     write_csv(higher_reef_fk_den, "prep/data/rvc_trophic_groups/higher_reef_fk_den_merged.csv")
     
+    higher_reef_den = higher_reef_fk_den %>%
+      filter(protected_status == "all")%>% 
+      group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
+    write_csv(higher_reef_den, "prep/data/rvc_trophic_groups/higher_reef_den.csv")
+    
     #biomass
     higher_reef_fk_bio = getDomainBiomass(RVCdata_FK, higher_reef_spp_list, RVCdata_FK$taxonomic_data)
     write_csv(higher_reef_fk_bio, "prep/data/rvc_trophic_groups/higher_reef_fk_bio_merged.csv")
     
+    higher_reef_bio = higher_reef_fk_bio %>%
+      group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
+    write_csv(higher_reef_bio, "prep/data/rvc_trophic_groups/higher_reef_bio.csv")
+    
     #fk diversity
-    higher_reef_fk_abundance = higher_reef_fk_abun %>% 
-      select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-      group_by(YEAR, protected_status) %>% #48 groups 
+    higher_reef_fk_diversity = higher_reef_fk_abun %>% 
+      filter(protected_status == "all") %>% 
+      select(YEAR, SPECIES_CD, abundance) %>%  
+      group_by(YEAR) %>% #48 groups 
       nest(-YEAR) %>%  
       mutate(
         data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
@@ -884,8 +932,8 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/higher_reef_fk_abun.csv",
           function(x) exp(diversity(x, index = 'shannon')))) %>%
       unnest(richness, simpson, shannon)
     
-    higher_reef_diversity = higher_reef_fk_abundance %>%
-      select(YEAR, protected_status, richness, simpson, shannon) 
+    higher_reef_diversity = higher_reef_fk_diversity %>%
+      select(YEAR, richness, simpson, shannon) 
     write_csv(higher_reef_diversity, "prep/data/rvc_trophic_groups/higher_reef_fk_diversity.csv")
 }
 
@@ -958,8 +1006,9 @@ if(!all(file.exists(
     
     #diversity metrics 
     grunt_fk_abundance = grunt_fk_abun %>% 
-      select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-      group_by(YEAR, protected_status) %>% #48 groups 
+      filter(protected_status == "all") %>%
+      select(YEAR, SPECIES_CD, abundance) %>%  
+      group_by(YEAR) %>% #48 groups 
       nest(-YEAR) %>%  
       mutate(
         data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
@@ -978,7 +1027,8 @@ if(!all(file.exists(
       unnest(richness, simpson, shannon)
     
     grunt_fk_diversity = grunt_fk_abundance %>%
-      select(YEAR, protected_status, richness, simpson, shannon) 
+      select(YEAR, richness, simpson, shannon) 
+    
     write_csv(grunt_fk_diversity, "prep/data/rvc_trophic_groups/grunt_fk_diversity.csv")
 }
 
