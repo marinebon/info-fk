@@ -177,24 +177,90 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/forage_abun.csv",
 |*Mycteroperca tigris*          |	tiger grouper	      | MYC TIGR  |
 |*Mycteroperca venenosa*        |	yellowfin grouper	  | MYC VENE  |
 
-### Snappers
 
-| Scientific name               | Common name         | RVC code  |  
-|:------------------------------|:--------------------|:----------|
-|*Lutjanus analis*              |	mutton snapper	    | LUT ANAL  |
-|*Lutjanus apodus*	            | schoolmaster	      | LUT APOD  |
-|*Lutjanus buccanella*	        | blackfin snapper	  | LUT BUCC  |
-|*Lutjanus campechanus*	        | red snapper	        | Lut CAMP  |
-|*Lutjanus cyanopterus*	        | cubera snapper	    | LUT CYAN  |
-|*Lutjanus griseus*	            | gray snapper	      | LUT GRIS  |
-|*Lutjanus jocu*	              | dog snapper	        | LUT JOCU  |
-|*Lutjanus mahogoni*	          | mahogany snapper	  | LUT MAHO  |
-|*Lutjanus synagris*	          | lane snapper	      | LUT SYNA  |
-|*Ocyurus chrysurus*	          | yellowtail snapper	| OCY CHRY  |
-|*Rhomboplites aurorubens*	    | vermilion snapper	  | RHO AURO  |
-|*snapper species*	            | snapper species	    | LUT SPE.  |
+```{r grouper}
 
-### Hogfish
+if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
+                    "prep/data/rvc_trophic_groups/grouper_snapper_den.csv",
+                    "prep/data/rvc_trophic_groups/grouper_snapper_bio.csv",
+                    "prep/data/rvc_trophic_groups/grouper_fk_diversity.csv"))){
+
+    
+  grouper_spp_list= c("CEP CRUE", "MYC BONA", "EPI MORI", "EPI STRI", "EPI ITAJ", "CEP FULV", "MYC MICR", "MYC PHEN", "MYC VENE", "MYC INTE", "MYC TIGR", "EPI FLAV", "DER INER", "SRR SPE.", "Epi nive", "Myc acut")
+  
+  #abundance
+  grouper_fk_abun = getDomainAbundance(RVCdata_FK, grouper_spp_list)
+  write_csv(grouper_fk_abun, "prep/data/rvc_trophic_groups/grouper_fk_abun.csv")
+  
+  grouper_fk_abun = read_csv("prep/data/rvc_trophic_groups/grouper_fk_abun.csv",col_types = cols(protected_status= col_character()))
+  
+  #density
+  grouper_fk_den = getDomainDensity(RVCdata_FK, grouper_spp_list)
+  write_csv(grouper_fk_den, "prep/data/rvc_trophic_groups/grouper_fk_den.csv")
+  
+  grouper_fk_den = read_csv("prep/data/rvc_trophic_groups/grouper_fk_den.csv",col_types = cols(protected_status= col_character()))
+  
+  grouper_den = grouper_fk_den %>% 
+    group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))%>%
+    mutate(trophic_group = "Grouper")
+  write_csv(grouper_den, "prep/data/rvc_trophic_groups/grouper_den.csv")
+  
+  #biomass
+  grouper_fk_bio = getDomainBiomass(RVCdata_FK, grouper_spp_list, RVCdata_FK$taxonomic_data)
+  write_csv(grouper_fk_bio, "prep/data/rvc_trophic_groups/grouper_fk_bio_merged.csv")
+  
+  grouper_fk_bio = read_csv("prep/data/rvc_trophic_groups/grouper_fk_bio_merged.csv")
+  
+  grouper_bio = grouper_fk_bio %>% 
+  group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))%>%
+    mutate(trophic_group = "Grouper")
+  write_csv(grouper_bio, "prep/data/rvc_trophic_groups/grouper_bio.csv")
+  
+  #diversity metrics 
+  grouper_fk_diversity = grouper_fk_abun %>%
+    filter(protected_status == "all") %>% 
+    select(YEAR, SPECIES_CD, abundance) %>%  
+    group_by(YEAR) %>% 
+    nest(-YEAR) %>%  
+    mutate(
+      data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill =0)), 
+      #species richness 
+      richness = map(
+        data_wide, 
+        function(x) specnumber(x)),
+      #simpson diversity as effective number of species 
+      simpson = map( 
+        data_wide,
+        function(x) 1/(1 - diversity(x, index = 'simpson'))),
+      #shannon diversity as effective number of species 
+      shannon = map(
+        data_wide,
+        function(x) exp(diversity(x, index = 'shannon')))) %>%
+    unnest(richness, simpson, shannon)
+  
+  grouper_diversity = grouper_fk_diversity %>%
+    select(YEAR, richness, shannon, simpson) %>%
+    mutate(trophic_group = "Grouper")
+  write_csv(grouper_diversity, "prep/data/rvc_trophic_groups/grouper_diversity.csv")
+}
+  
+```
+
+### Hogfish 
 
 | Scientific name               | Common name         | RVC code  |  
 |:------------------------------|:--------------------|:----------|
@@ -202,7 +268,82 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/forage_abun.csv",
 |*Bodianus rufus*	              | Spanish hogfish	    | BOD RUFU  |
 |*Lachnolaimus maximus*	        | hogfish	            | LAC MAXI  |
 
-### Sea bass and Hamlets
+```{r hogfish}
+
+  hogfish_spp_list = c("LAC MAXI", "BOD RUFU", "BOD PULC")
+  
+  #abundance
+  hogfish_fk_abun = getDomainAbundance(RVCdata_FK, hogfish_spp_list, merge_protected = F)
+  write_csv(hogfish_fk_abun, "prep/data/rvc_trophic_groups/hogfish_fk_abun.csv")
+  
+  hogfish_fk_abun = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_abun.csv", col_types = cols(protected_status= col_character()))
+  
+  #density
+  hogfish_fk_den = getDomainDensity(RVCdata_FK, hogfish_spp_list, merge_protected = F)
+  write_csv(hogfish_fk_den, "prep/data/rvc_trophic_groups/hogfish_fk_den.csv")
+  
+  hogfish_fk_den = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_den.csv",col_types = cols(protected_status= col_character()))
+  
+  hogfish_den = hogfish_fk_den %>% 
+  group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))%>%
+    mutate(trophic_group = "Hogfish")
+  write_csv(hogfish_den, "prep/data/rvc_trophic_groups/hogfish_den.csv")
+  
+  #biomass
+  hogfish_fk_bio = getDomainBiomass(RVCdata_FK, hogfish_spp_list, RVCdata_FK$taxonomic_data)
+  write_csv(hogfish_fk_bio, "prep/data/rvc_trophic_groups/hogfish_fk_bio_merged.csv")
+  
+  hogfish_fk_bio = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_bio_merged.csv")
+  
+  hogfish_bio = hogfish_fk_bio %>% 
+  group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))%>%
+    mutate(trophic_group = "Hogfish")
+  write_csv(hogfish_bio, "prep/data/rvc_trophic_groups/hogfish_bio.csv")
+  
+  #FK diversity
+  hogfish_fk_abundance = hogfish_fk_abun %>% 
+    filter(protected_status == "all") %>% 
+    select(YEAR, SPECIES_CD, abundance) %>%  
+    group_by(YEAR) %>% #48 groups 
+    nest(-YEAR) %>%  
+    mutate(
+      data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
+      #species richness 
+      richness = map(
+        data_wide, 
+        function(x) specnumber(x)),
+      #simpson diversity as effective number of species 
+      simpson = map( 
+        data_wide,
+        function(x) 1/(1 - diversity(x, index = 'simpson'))),
+      #shannon diversity as effective number of species 
+      shannon = map(
+        data_wide,
+        function(x) exp(diversity(x, index = 'shannon')))) %>%
+    unnest(richness, simpson, shannon)
+  
+  hogfish_fk_diversity = hogfish_fk_abundance %>%
+    select(YEAR, richness, simpson, shannon) %>%
+    mutate(trophic_group = "Hogfish")
+  write_csv(hogfish_fk_diversity, "prep/data/rvc_trophic_groups/hogfish_fk_diversity.csv")
+
+```
+
+### Seabass hamlet
 
 | Scientific name               | Common name           | RVC code  |  
 |:------------------------------|:----------------------|:----------|
@@ -238,59 +379,41 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/forage_abun.csv",
 |*Serranus tigrinus*	          | harlequin bass	      | SER TIGR  |
 |*Serranus tortugarum*	        | chalk bass	          | SER TORT  |
 
-```{r grouper-snapper complex}
+```{r seabass hamlet}
 
-if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
-                    "prep/data/rvc_trophic_groups/grouper_snapper_den.csv",
-                    "prep/data/rvc_trophic_groups/grouper_snapper_bio.csv"))){
+  sea_bass_hamlet_spp_list = c("SER TIGR","HYP GEMM","HYP UNIC","SER TABA","SER BALD","HYP PUEL","EPI ADSC","SER TORT","EPI GUTT","HYP NIGR","DIP FORM","HYP SPE.","SCH BETA","HYP TANN", "RYP SAPO","PAR FURC","HYP INDI","HYP GUTT","ALP AFER","LIO EUKR","SER ANNU","LIO RUBE","HYP HYBR","HYP CHLO","PRI AQUI","RYP MACU","SER SUBL","CEN OCYU","CEN STRI","Epi drum","Lio mowb")
   
-  grouper_fk_abun_csv       = "prep/data/rvc_trophic_groups/grouper_fk_abun.csv"
-  grouper_fk_den_csv        = "prep/data/rvc_trophic_groups/grouper_fk_den.csv"
-  grouper_fk_bio_csv        = "prep/data/rvc_trophic_groups/grouper_fk_bio_merged.csv"
-  grouper_fk_diversity_csv  = "prep/data/rvc_trophic_groups/grouper_fk_diversity.csv"
-  hogfish_fk_abun_csv       = "prep/data/rvc_trophic_groups/hogfish_fk_abun.csv"
-  hogfish_fk_den_csv        = "prep/data/rvc_trophic_groups/hogfish_fk_den.csv"
-  hogfish_fk_bio_csv        = "prep/data/rvc_trophic_groups/hogfish_fk_bio_merged.csv"
-  seabass_fk_abun_csv       = "prep/data/rvc_trophic_groups/seabass_fk_abun.csv"
-  seabass_fk_den_csv        = "prep/data/rvc_trophic_groups/seabass_fk_den.csv"
-  seabass_fk_bio_csv        = "prep/data/rvc_trophic_groups/seabass_fk_bio_merged.csv"
-  seabass_fk_diversity_csv  = "prep/data/rvc_trophic_groups/seabass_fk_diversity.csv"
-  snapper_fk_abun_csv       = "prep/data/rvc_trophic_groups/snapper_fk_abun.csv"
-  snapper_fk_den_csv        = "prep/data/rvc_trophic_groups/snapper_fk_den.csv"
-  snapper_fk_bio_csv        = "prep/data/rvc_trophic_groups/snapper_fk_bio_merged.csv"
-  snapper_fk_diversity_csv  = "prep/data/rvc_trophic_groups/snapper_fk_diversity.csv"
-  
-  if (!all(file.exists(grouper_fk_abun_csv,
-                       grouper_fk_den_csv,grouper_fk_bio_csv,grouper_fk_diversity_csv,
-                       hogfish_fk_abun_csv,hogfish_fk_den_csv,hogfish_fk_bio_csv,
-                       seabass_fk_abun_csv,seabass_fk_den_csv,seabass_fk_bio_csv,seabass_fk_diversity_csv,
-                       snapper_fk_abun_csv,snapper_fk_den_csv,snapper_fk_bio_csv,snapper_fk_diversity_csv))){
-    
-  grouper_spp_list= c("CEP CRUE", "MYC BONA", "EPI MORI", "EPI STRI", "EPI ITAJ", "CEP FULV", "MYC MICR", "MYC PHEN", "MYC VENE", "MYC INTE", "MYC TIGR", "EPI FLAV", "DER INER", "SRR SPE.", "Epi nive", "Myc acut")
   #abundance
-  grouper_fk_abun = getDomainAbundance(RVCdata_FK, grouper_spp_list)
-  write_csv(grouper_fk_abun, "prep/data/rvc_trophic_groups/grouper_fk_abun.csv")
+  seabass_fk_abun = getDomainAbundance(RVCdata_FK, sea_bass_hamlet_spp_list, merge_protected = F)
+  write_csv(seabass_fk_abun, "prep/data/rvc_trophic_groups/seabass_fk_abun.csv")
+  
+  seabass_fk_abun = read_csv("prep/data/rvc_trophic_groups/seabass_fk_abun.csv",col_types = cols(protected_status= col_character()))
   
   #density
-  grouper_fk_den = getDomainDensity(RVCdata_FK, grouper_spp_list)
-  write_csv(grouper_fk_den, "prep/data/rvc_trophic_groups/grouper_fk_den.csv")
+  seabass_fk_den = getDomainDensity(RVCdata_FK, sea_bass_hamlet_spp_list, merge_protected = F)
+  write_csv(seabass_fk_den, "prep/data/rvc_trophic_groups/seabass_fk_den.csv")
   
-  grouper_den = grouper_fk_den %>% 
-    group_by(YEAR) %>%
+  seabass_fk_den = read_csv("prep/data/rvc_trophic_groups/seabass_fk_den.csv",col_types = cols(protected_status= col_character()))
+  
+  seabass_den = seabass_fk_den %>% 
+  group_by(YEAR) %>%
       summarize(
         density_mean = mean(density),
         density_n = length(density),
         density_sd = sd(density),
         density_se = density_sd / sqrt(density_n),
         density_min = min(density),
-        density_max = max(density))
-    write_csv(grouper_den, "prep/data/rvc_trophic_groups/grouper_den.csv")
+        density_max = max(density))%>%
+    mutate(trophic_group = "Seabass and Hamlets")
+  write_csv(seabass_den, "prep/data/rvc_trophic_groups/seabass_den.csv")
   
   #biomass
-  grouper_fk_bio = getDomainBiomass(RVCdata_FK, grouper_spp_list, RVCdata_FK$taxonomic_data)
-  write_csv(grouper_fk_bio, "prep/data/rvc_trophic_groups/grouper_fk_bio_merged.csv")
+  seabass_fk_bio = getDomainBiomass(RVCdata_FK, sea_bass_hamlet_spp_list,RVCdata_FK$taxonomic_data)
+  write_csv(seabass_fk_bio, "prep/data/rvc_trophic_groups/seabass_fk_bio_merged.csv")
   
-  grouper_bio = grouper_fk_bio %>% 
+  seabass_fk_bio = read_csv("prep/data/rvc_trophic_groups/seabass_fk_bio_merged.csv")
+  
+  seabass_bio = seabass_fk_bio %>% 
   group_by(YEAR) %>%
       summarize(
         biomass_mean = mean(biomass),
@@ -298,92 +421,15 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
         biomass_sd = sd(biomass),
         biomass_se = biomass_sd / sqrt(biomass_n),
         biomass_min = min(biomass),
-        biomass_max = max(biomass))
-  write_csv(grouper_bio, "prep/data/rvc_trophic_groups/grouper_bio.csv")
-  
-  #diversity metrics 
-  grouper_fk_diversity = grouper_fk_abun %>%
-    filter(protected_status == "all") %>% 
-    select(YEAR, SPECIES_CD, abundance) %>%  
-    group_by(YEAR) %>% 
-    nest(-YEAR) %>%  
-    mutate(
-      data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill =0)), 
-      #species richness 
-      richness = map(
-        data_wide, 
-        function(x) specnumber(x)),
-      #simpson diversity as effective number of species 
-      simpson = map( 
-        data_wide,
-        function(x) 1/(1 - diversity(x, index = 'simpson'))),
-      #shannon diversity as effective number of species 
-      shannon = map(
-        data_wide,
-        function(x) exp(diversity(x, index = 'shannon')))) %>%
-    unnest(richness, simpson, shannon)
-  
-  grouper_diversity = grouper_fk_diversity %>%
-    select(YEAR, richness, shannon, simpson) 
-  write_csv(grouper_diversity, "prep/data/rvc_trophic_groups/grouper_fk_diversity.csv")
-  
-  hogfish_spp_list = c("LAC MAXI", "BOD RUFU", "BOD PULC")
-  
-  #abundance
-  hogfish_fk_abun = getDomainAbundance(RVCdata_FK, hogfish_spp_list, merge_protected = F)
-  write_csv(hogfish_fk_abun, "prep/data/rvc_trophic_groups/hogfish_fk_abun.csv")
-  
-  #density
-  hogfish_fk_den = getDomainDensity(RVCdata_FK, hogfish_spp_list, merge_protected = F)
-  write_csv(hogfish_fk_den, "prep/data/rvc_trophic_groups/hogfish_fk_den.csv")
-  
-  #biomass
-  hogfish_fk_bio = getDomainBiomass(RVCdata_FK, hogfish_spp_list, RVCdata_FK$taxonomic_data)
-  write_csv(hogfish_fk_bio, "prep/data/rvc_trophic_groups/hogfish_fk_bio_merged.csv")
-  
-  #FK diversity
-  hogfish_fk_abundance = hogfish_fk_abun %>% 
-    select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-    group_by(YEAR, protected_status) %>% #48 groups 
-    nest(-YEAR) %>%  
-    mutate(
-      data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
-      #species richness 
-      richness = map(
-        data_wide, 
-        function(x) specnumber(x)),
-      #simpson diversity as effective number of species 
-      simpson = map( 
-        data_wide,
-        function(x) 1/(1 - diversity(x, index = 'simpson'))),
-      #shannon diversity as effective number of species 
-      shannon = map(
-        data_wide,
-        function(x) exp(diversity(x, index = 'shannon')))) %>%
-    unnest(richness, simpson, shannon)
-  
-  hogfish_fk_diversity = hogfish_fk_abundance %>%
-    select(YEAR, protected_status, richness, simpson, shannon) 
-  write_csv(hogfish_fk_diversity, "prep/data/rvc_trophic_groups/hogfish_fk_diversity.csv")
-  
-  sea_bass_hamlet_spp_list = c("SER TIGR","HYP GEMM","HYP UNIC","SER TABA","SER BALD","HYP PUEL","EPI ADSC","SER TORT","EPI GUTT","HYP NIGR","DIP FORM","HYP SPE.","SCH BETA","HYP TANN", "RYP SAPO","PAR FURC","HYP INDI","HYP GUTT","ALP AFER","LIO EUKR","SER ANNU","LIO RUBE","HYP HYBR","HYP CHLO","PRI AQUI","RYP MACU","SER SUBL","CEN OCYU","CEN STRI","Epi drum","Lio mowb")
-  
-  #abundance
-  seabass_fk_abun = getDomainAbundance(RVCdata_FK, sea_bass_hamlet_spp_list, merge_protected = F)
-  write_csv(seabass_fk_abun, "prep/data/rvc_trophic_groups/seabass_fk_abun.csv")
-  
-  #density
-  seabass_fk_den = getDomainDensity(RVCdata_FK, sea_bass_hamlet_spp_list, merge_protected = F)
-  write_csv(seabass_fk_den, "prep/data/rvc_trophic_groups/seabass_fk_den.csv")
-  
-  #biomass
-  seabass_fk_bio = getDomainBiomass(RVCdata_FK, sea_bass_hamlet_spp_list,RVCdata_FK$taxonomic_data)
-  write_csv(seabass_fk_bio, "prep/data/rvc_trophic_groups/seabass_fk_bio_merged.csv")
+        biomass_max = max(biomass))%>%
+    mutate(trophic_group = "Seabass and Hamlets")
+  write_csv(seabass_bio, "prep/data/rvc_trophic_groups/seabass_bio.csv")
   
   #diversity
   seabass_fk_abundance = seabass_fk_abun %>% 
-    select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-    group_by(YEAR, protected_status) %>% #48 groups 
+    filter(protected_status == "all") %>% 
+    select(YEAR,SPECIES_CD, abundance) %>%  
+    group_by(YEAR) %>% #48 groups 
     nest(-YEAR) %>%  
     mutate(
       data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
@@ -402,27 +448,80 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
     unnest(richness, simpson, shannon)
   
   seabass_fk_diversity = seabass_fk_abundance %>%
-    select(YEAR, protected_status, richness, simpson, shannon) 
+    select(YEAR, richness, simpson, shannon) %>%
+    mutate(trophic_group = "Seabass and Hamlets")
   write_csv(seabass_fk_diversity, "prep/data/rvc_trophic_groups/seabass_fk_diversity.csv")
   
+```
+
+### Snapper 
+
+| Scientific name               | Common name         | RVC code  |  
+|:------------------------------|:--------------------|:----------|
+|*Lutjanus analis*              |	mutton snapper	    | LUT ANAL  |
+|*Lutjanus apodus*	            | schoolmaster	      | LUT APOD  |
+|*Lutjanus buccanella*	        | blackfin snapper	  | LUT BUCC  |
+|*Lutjanus campechanus*	        | red snapper	        | Lut CAMP  |
+|*Lutjanus cyanopterus*	        | cubera snapper	    | LUT CYAN  |
+|*Lutjanus griseus*	            | gray snapper	      | LUT GRIS  |
+|*Lutjanus jocu*	              | dog snapper	        | LUT JOCU  |
+|*Lutjanus mahogoni*	          | mahogany snapper	  | LUT MAHO  |
+|*Lutjanus synagris*	          | lane snapper	      | LUT SYNA  |
+|*Ocyurus chrysurus*	          | yellowtail snapper	| OCY CHRY  |
+|*Rhomboplites aurorubens*	    | vermilion snapper	  | RHO AURO  |
+|*snapper species*	            | snapper species	    | LUT SPE.  |
+
+```{r snapper}  
+
   snapper_spp_list = c("OCY CHRY", "LUT GRIS", "LUT ANAL", "LUT APOD", "LUT SYNA", "LUT MAHO", "LUT JOCU", "LUT BUCC", 'LUT SPE.', "LUT CYAN", "RHO AURO", "Lut camp")
   
   #abundance
   snapper_fk_abun = getDomainAbundance(RVCdata_FK, snapper_spp_list, merge_protected = F)
   write_csv(snapper_fk_abun, "prep/data/rvc_trophic_groups/snapper_fk_abun.csv")
   
+  snapper_fk_abun = read_csv("prep/data/rvc_trophic_groups/snapper_fk_abun.csv",col_types = cols(protected_status= col_character()))
+  
   #density
   snapper_fk_den = getDomainDensity(RVCdata_FK, snapper_spp_list, merge_protected = F)
   write_csv(snapper_fk_den, "prep/data/rvc_trophic_groups/snapper_fk_den.csv")
+  
+  snapper_fk_den = read_csv("prep/data/rvc_trophic_groups/snapper_fk_den.csv", col_types = cols(protected_status= col_character()))
+  
+  snapper_den = snapper_fk_den %>% 
+  group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density)) %>%
+    mutate(trophic_group = "Snapper")
+  write_csv(snapper_den, "prep/data/rvc_trophic_groups/snapper_den.csv")
   
   #biomass
   snapper_fk_bio = getDomainBiomass(RVCdata_FK, snapper_spp_list, RVCdata_FK$taxonomic_data)
   write_csv(snapper_fk_bio, "prep/data/rvc_trophic_groups/snapper_fk_bio_merged.csv")
   
+  snapper_fk_bio = read_csv("prep/data/rvc_trophic_groups/snapper_fk_bio_merged.csv")
+  
+  snapper_bio = snapper_fk_bio %>% 
+  group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))%>%
+    mutate(trophic_group = "Snapper")
+  write_csv(snapper_bio, "prep/data/rvc_trophic_groups/snapper_bio.csv")
+  
   #diversity
   snapper_fk_abundance = snapper_fk_abun %>% 
-    select(YEAR, protected_status, SPECIES_CD, abundance) %>%  
-    group_by(YEAR, protected_status) %>% #48 groups 
+    filter(protected_status == "all") %>% 
+    select(YEAR, SPECIES_CD, abundance) %>%  
+    group_by(YEAR) %>% #48 groups 
     nest(-YEAR) %>%  
     mutate(
       data_wide = map(data, ~ spread(data=.x, SPECIES_CD, abundance, fill = 0)), 
@@ -441,35 +540,30 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
     unnest(richness, simpson, shannon)
   
   snapper_fk_diversity = snapper_fk_abundance %>%
-    select(YEAR, protected_status, richness, simpson, shannon) 
+    select(YEAR, richness, simpson, shannon)%>%
+    mutate(trophic_group = "Snapper") 
   write_csv(snapper_fk_diversity, "prep/data/rvc_trophic_groups/snapper_fk_diversity.csv")
   
-  }
   
-  #abundance data 
-  snapper_abun = read_csv("prep/data/rvc_trophic_groups/snapper_fk_abun.csv")
-  seabass_abun = read_csv("prep/data/rvc_trophic_groups/seabass_fk_abun.csv")
-  hogfish_abun = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_abun.csv")
-  grouper_abun = read_csv("prep/data/rvc_trophic_groups/grouper_fk_abun.csv")
-  
-  snapper_grouper_abun = rbind(snapper_abun,seabass_abun,hogfish_abun,grouper_abun) #1999-2016 
-  
-  snapper_grouper_abun = snapper_grouper_abun %>%
-  group_by(YEAR) %>%
-      summarize(
-        abundance_mean = mean(abundance),
-        abundance_n = length(abundance),
-        abundance_sd = sd(abundance),
-        abundance_se = abundance_sd / sqrt(abundance_n),
-        abundance_min = min(abundance),
-        abundance_max = max(abundance))
-    write_csv(snapper_grouper_abun, "prep/data/rvc_trophic_groups/snapper_grouper_abun.csv")
+```
+
+### Grouper-Snapper complex
+
+```{r grouper-snapper rbind}
+
+#abundance data 
+  # snapper_abun = read_csv("prep/data/rvc_trophic_groups/snapper_fk_abun.csv")
+  # seabass_abun = read_csv("prep/data/rvc_trophic_groups/seabass_fk_abun.csv")
+  # hogfish_abun = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_abun.csv")
+  # grouper_abun = read_csv("prep/data/rvc_trophic_groups/grouper_fk_abun.csv")
+  # 
+  # snapper_grouper_abun = rbind(snapper_abun,seabass_abun,hogfish_abun,grouper_abun) #1999-2016 
     
   #biomass data 
-  snapper_bio = read_csv("prep/data/rvc_trophic_groups/snapper_fk_bio_merged.csv")
-  seabass_bio = read_csv("prep/data/rvc_trophic_groups/seabass_fk_bio_merged.csv")
-  hogfish_bio = read_csv("prep/data/rvc_trophic_groups/hogfish_fk_bio_merged.csv")
-  grouper_bio = read_csv("prep/data/rvc_trophic_groups/grouper_fk_bio_merged.csv")
+  snapper_bio = read_csv("prep/data/rvc_trophic_groups/snapper_bio.csv")
+  seabass_bio = read_csv("prep/data/rvc_trophic_groups/seabass_bio.csv")
+  hogfish_bio = read_csv("prep/data/rvc_trophic_groups/hogfish_bio.csv")
+  grouper_bio = read_csv("prep/data/rvc_trophic_groups/grouper_bio.csv")
   
   snapper_grouper_bio = rbind(snapper_bio,seabass_bio,hogfish_bio,grouper_bio) #1999-2016 
   
@@ -537,7 +631,7 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/grouper_snapper_abun.csv",
   
     write_csv(snapper_grouper_diversity, "prep/data/rvc_trophic_groups/snapper_grouper_diversity.csv")  
 }
-  
+
 ```
 
 ### Parrotfish
