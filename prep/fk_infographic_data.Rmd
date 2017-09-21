@@ -909,6 +909,7 @@ if(!all(file.exists("prep/data/rvc_trophic_groups/higher_reef_fk_abun.csv",
 |*Haemulon sciurus*             |	bluestriped grunt	  | HAE SCIU  |
 |*Haemulon sp.*                 |	grunt species	      | HAE SPE.  |
 |*Haemulon striatum*            |	striped grunt	      | HAE STRI  | 
+
 ```{r grunt}
 
 if(!all(file.exists(
