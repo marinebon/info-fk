@@ -1393,10 +1393,36 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
     
     #density 
     exploited_fk_den <- getDomainDensity(RVCdata_FK, species = exploited_spp_list, merge_protected = F)
-    write_csv(exploited_fk_den,"prep/data/rvc_exploited_species/exploited_fk_den.csv")
+    
+    exploited_den = exploited_fk_den %>%
+      mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
+                                       ifelse(grepl("1", protected_status), 'Protected', 'IDK')))%>%
+      group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
+
+    write_csv(exploited_den,"prep/data/rvc_exploited_species/exploited_fk_den.csv")
     
     #biomass 
     exploited_fk_bio <- getDomainBiomass(RVCdata_FK, species = exploited_spp_list, growth_parameters = RVCdata_FK$taxonomic_data, merge_protected = F)
+    
+    exploited_bio = exploited_fk_bio %>% 
+    mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
+                                       ifelse(grepl("1", protected_status), 'Protected', 'IDK'))) %>%
+      group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
+    
     write_csv(exploited_fk_bio,"prep/data/rvc_exploited_species/exploited_fk_bio.csv")
   }
   
@@ -1419,7 +1445,17 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
         'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
     select(YEAR, common_name, protected_status, density) %>%
     group_by(YEAR, common_name, protected_status) %>%
-    filter(protected_status != "all") 
+    filter(protected_status != "all") %>%
+    mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
+                                       ifelse(grepl("1", protected_status), 'Protected', 'IDK')))%>%
+      group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
   
   write_csv(exploited_density, "prep/data/rvc_exploited_species/exploited_den.csv")
   
@@ -1442,7 +1478,15 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
         'OCY CHRY' = 'Yellowtail_Snapper')) %>% 
     select(YEAR, common_name, protected_status, biomass) %>%
     group_by(YEAR, common_name, protected_status) %>%
-    filter(protected_status != "all") 
+    filter(protected_status != "all") %>%
+    group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
   
   write_csv(exploited_biomass, "prep/data/rvc_exploited_species/exploited_bio.csv")
   
