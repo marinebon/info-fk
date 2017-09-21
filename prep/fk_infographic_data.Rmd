@@ -928,9 +928,33 @@ if(!all(file.exists(
     grunt_fk_den = getDomainDensity(RVCdata_FK, grunt_spp_list)
     write_csv(grunt_fk_den, "prep/data/rvc_trophic_groups/grunt_fk_den.csv")
     
+    grunt_den = grunt_fk_den %>% 
+      filter(protected_status == "all")%>% 
+      group_by(YEAR) %>%
+      summarize(
+        density_mean = mean(density),
+        density_n = length(density),
+        density_sd = sd(density),
+        density_se = density_sd / sqrt(density_n),
+        density_min = min(density),
+        density_max = max(density))
+    write_csv(grunt_den, "prep/data/rvc_trophic_groups/grunt_den.csv")
+    
+    
     #biomass
     grunt_fk_bio = getDomainBiomass(RVCdata_FK, grunt_spp_list, RVCdata_FK$taxonomic_data)
     write_csv(grunt_fk_bio, "prep/data/rvc_trophic_groups/grunt_fk_bio_merged.csv")
+    
+    grunt_bio = grunt_fk_bio %>%
+      group_by(YEAR) %>%
+      summarize(
+        biomass_mean = mean(biomass),
+        biomass_n = length(biomass),
+        biomass_sd = sd(biomass),
+        biomass_se = biomass_sd / sqrt(biomass_n),
+        biomass_min = min(biomass),
+        biomass_max = max(biomass))
+    write_csv(grunt_bio, "prep/data/rvc_trophic_groups/grunt_bio.csv")
     
     #diversity metrics 
     grunt_fk_abundance = grunt_fk_abun %>% 
@@ -1396,9 +1420,10 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
     exploited_fk_den <- getDomainDensity(RVCdata_FK, species = exploited_spp_list, merge_protected = F)
     
     exploited_den = exploited_fk_den %>%
+      filter(protected_status != "all") %>%
       mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
                                        ifelse(grepl("1", protected_status), 'Protected', 'IDK')))%>%
-      group_by(YEAR) %>%
+      group_by(YEAR,protected_status) %>%
       summarize(
         density_mean = mean(density),
         density_n = length(density),
@@ -1427,7 +1452,7 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
     write_csv(exploited_fk_bio,"prep/data/rvc_exploited_species/exploited_fk_bio.csv")
   }
   
-  exploited_den = read_csv("prep/data/rvc_exploited_species/exploited_fk_den.csv")
+  exploited_den = read_csv("prep/data/rvc_exploited_species/exploited_den.csv")
   
   exploited_density = exploited_den %>%
     mutate(
@@ -1449,7 +1474,7 @@ if(!all(file.exists("prep/data/rvc_exploited_species/exploited_den.csv",
     filter(protected_status != "all") %>%
     mutate(protected_status = ifelse(grepl("0", protected_status), 'Unprotected',
                                        ifelse(grepl("1", protected_status), 'Protected', 'IDK')))%>%
-      group_by(YEAR) %>%
+      group_by(YEAR, protected_status) %>%
       summarize(
         density_mean = mean(density),
         density_n = length(density),
