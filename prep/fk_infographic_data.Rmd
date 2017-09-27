@@ -1767,6 +1767,16 @@ if(!file.exists("coral_div.csv")){
     #Zoanthidea = col_double(),
     #Urchins = col_double()
   
+  cremp_abund_percent = cremp_abund %>%
+    mutate(
+      Macroalgae = (Macroalgae*100), 
+      Cyano = (Cyano*100),
+      Octocoral = (Octocoral*100),
+      Others = (Others*100),
+      Porifera = (Porifera*100), 
+      Seagrass = (Seagrass*100),
+      `Stony Coral` = (`Stony Coral`*100))
+  
   crichness = read_csv("prep/data/CREMP/CREMP_Domain_Coral_Richness.csv") #1996-2015
   toupper(names(crichness)) #"ROW LABELS","DOMAIN RICHNESS"
 }
