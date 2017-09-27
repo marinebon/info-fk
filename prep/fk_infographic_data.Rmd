@@ -1621,10 +1621,12 @@ if(!file.exists("prep/data/domain_div.csv")){
   #domain_abun = read_csv("C:/Users/mhepn/Documents/RVC/big_csv/abundance_domain/domain_fk_abun.csv") #1307 KB
   #write_rds(domain_abun, "prep/data/domain_abun")
   
-  domain_abun = read_rds("domain_abun")
+  domain_abun = read_rds("prep/data/domain_abun")
 
   domain_div = domain_abun %>%
     filter(protected_status != "all") %>%
+    mutate(protected_status = ifelse(grepl("0", protected_status), "Unprotected",
+                                     ifelse(grepl("1",protected_status), "Protected","jk"))) %>% 
     select(YEAR, SPECIES_CD, abundance, protected_status) %>%
     group_by(YEAR, protected_status) %>%
     nest(-YEAR) %>%
@@ -1776,6 +1778,8 @@ if(!file.exists("coral_div.csv")){
       Porifera = (Porifera*100), 
       Seagrass = (Seagrass*100),
       `Stony Coral` = (`Stony Coral`*100))
+  
+  write_csv(cremp_abund_percent, "prep/data/CREMP/CREMP_percent_cover.csv")
   
   crichness = read_csv("prep/data/CREMP/CREMP_Domain_Coral_Richness.csv") #1996-2015
   toupper(names(crichness)) #"ROW LABELS","DOMAIN RICHNESS"
