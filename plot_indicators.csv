@@ -78,5 +78,3 @@ row,Classification_level,svg_id,plot_title,filter,col_t,col_y,col_se,y_label,gro
 78,Foundation species,sponge,Sponges (Porifera),NA,Year,Porifera,NA,% Sponge Cover,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/CREMP/CREMP_Pcover_group.csv,
 79,Foundation stecies,stony-coral,Stony coral,NA,Year,Stony Coral,NA,% Stony Coral Cover,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/CREMP/CREMP_Pcover_group.csv,
 80,Trophic level,trophic-pyramid,Reef fish Trophic Level,NA,YEAR,biomass_mean,biomass_se,Mean Biomass (g/40Mm^2),TL,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/rvc_trophic_level/trophic_level.csv,
-81,Trophic level,trophic-pyramid,Reef fish Trophic Level,NA,YEAR,biomass_mean,biomass_se,Mean Biomass (g/40Mm^2),TL,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/rvc_trophic_level/trophic_level.csv,
-82,Trophic level,trophic-pyramid,Reef fish Trophic Level,NA,YEAR,biomass_mean,biomass_se,Mean Biomass (g/40Mm^2),TL,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/rvc_trophic_level/trophic_level.csv,
