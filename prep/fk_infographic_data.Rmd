@@ -12,7 +12,6 @@ library(tidyverse)
 library(rvc)
 library(vegan)
 library(dygraphs)
-library(grDevices)
 library(RColorBrewer)
 library(devtools)
 library(servr) #needed servr to get infographiq to install 
