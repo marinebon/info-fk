@@ -1508,7 +1508,7 @@ if(!file.exists("prep/data/rvc_trophic_level/trophic_level_biomass.csv")){
     select(YEAR, biomass, SPECIES_CD) %>% 
     left_join(trophic_levels, trophic_level_biomass, by = 'SPECIES_CD')
   
-  trophic_level = trophic_level %>%
+  trophic_level_bio = trophic_level %>%
     group_by(YEAR, TL) %>%
     summarise(
         biomass_mean = mean(biomass),
