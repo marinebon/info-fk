@@ -1502,13 +1502,11 @@ if(!file.exists("prep/data/rvc_trophic_level/trophic_level_biomass.csv")){
   trophic_level_bio = getDomainBiomass(RVCdata_FK, trophic_level$RVC_CODE, RVCdata_FK$taxonomic_data)
   write_csv(trophic_level_bio, "prep/data/rvc_trophic_level/trophic_level_bio.csv")
   
-  trophic_level_biomass = read_csv("prep/data/rvc_trophic_level/trophic_level_bio.csv")
+  trophic_level_bio = read_csv("prep/data/rvc_trophic_level/trophic_level_bio.csv")
   
-  trophic_level = trophic_level_biomass %>%
+  trophic_level_biomass = trophic_level_bio %>%
     select(YEAR, biomass, SPECIES_CD) %>% 
-    left_join(trophic_levels, trophic_level_biomass, by = 'SPECIES_CD')
-  
-  trophic_level_bio = trophic_level %>%
+    left_join(trophic_levels, trophic_level_biomass, by = 'SPECIES_CD')%>% 
     group_by(YEAR, TL) %>%
     summarise(
         biomass_mean = mean(biomass),
@@ -1518,7 +1516,7 @@ if(!file.exists("prep/data/rvc_trophic_level/trophic_level_biomass.csv")){
         biomass_min = min(biomass),
         biomass_max = max(biomass))
   
-  write_csv(trophic_level, "prep/data/rvc_trophic_level/trophic_level.csv")
+  write_csv(trophic_level_biomass, "prep/data/rvc_trophic_level/trophic_level.csv")
   
 }
 
