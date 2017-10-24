@@ -80,3 +80,5 @@ row,Classification_level,svg_id,plot_title,filter,col_t,col_y,col_se,y_label,gro
 80,Trophic level,trophic-pyramid,Reef fish Trophic Level,NA,YEAR,biomass_mean,biomass_se,Mean Biomass (g/40Mm^2),TL,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/rvc_trophic_level/trophic_level.csv,
 81,,sst,Mean SST ,NA,Date,Mean SST ,,Deg C,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/FKNMS_GHRSST.csv,
 82,,sst,SST Anomaly,NA,Date,Anomaly,,Deg C,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/FKNMS_GHRSST.csv,
+81,,sst,Mean CHL ,NA,Date,Mean SST ,,_,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/FKNMS_MOD_CHL.csv,
+82,,sst,CHL Anomaly,NA,Date,Anomaly,,_,NA,https://raw.githubusercontent.com/marinebon/info-fk/master/prep/data/FKNMS_MOD_CHL.csv,
