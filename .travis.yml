@@ -1,0 +1,24 @@
+language: r
+sudo: false
+cache:
+  packages: true
+  directories:
+  - _cache
+git:
+  depth: 3
+script:
+- Rscript -e 'Rscript create_info_site.R'
+- git config --global user.name "Tylar Murray (Travis-CI)"
+- git config --global user.email "tylarmurray@mail.usf.edu"
+- git add -A
+- git commit -a -m "Updating MBON Pole to Pole data portal via travis-ci.org [ci skip]"
+- git push https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git HEAD:${TRAVIS_BRANCH}
+notifications:
+  email:
+    recipients:
+    - tylarmurray@mail.usf.edu
+    on_success: change
+    on_failure: change
+env:
+  global:
+  - secure: I7blHeeryLgSNvOM1AlW0V6r3gThdBrr9SmyhQz9/EGInkiTitbcdz4FTOYTZsy6obk2ydSxOJcEbDge5DQYFAsp2rOjUqiKLAA9CQxTmYADJgUVwj392ylDtHrAs8niKHvlT+oj1Y7JZhjn3HaU/LMiYTiCg9evsllhWvCWItwzYPaE6rMvhfwwDsOrqw22pBTpR96xmiZJVITC/EwsnqS2O4K8inzZ5sqR3diuz34+BGfM6ZrGN4T8i1nPfYB2i+1Niv+RZxnG3DH/bjvqok7NwicBfOa62nYtFZW6+UleX8in/foww9GGSZ8rLmbWzp+8ymxXP3DupVJ+OgXA7F3Ml/qH1dcIG80K1liqHpSlnRjXmJMv1FoVbtehRsO/QWjctfRFZtNTrf0P52/byPombtt44SiQKwwrxj5hhl6+LRVN6dOn5zkcc43ElRa7lroltNW+LOTUQ6KHdYmBcUfas45FiYrd9NXftg9JqePnTFgEWJMucsfU4x9XgsUUrco56CbVO9wvyuo8gBI51hl84671LnXNg/kL/CEnELJx1WzjD49fZp8n0VoHFifyJ/l/830dAvF1uoFnwkAd5ZF+IyAGXBtBlv/H85kJHt9ul06IVtsF4QnxIf9W3mMtwXVYUnqvXqCtFQV1pM2qwExPCqnGlZIfkkDMd6trISA=
