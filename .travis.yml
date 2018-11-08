@@ -18,7 +18,7 @@ script:
   - rm -rf ./rmd/ ./docs/
   - git add -A
   - chmod +x create_info_site.R
-  - create_info_site.R && git commit -a -m "Updating MBON Pole to Pole data portal via travis-ci.org [ci skip]"
+  - ./create_info_site.R && git commit -a -m "Updating MBON Pole to Pole data portal via travis-ci.org [ci skip]"
   - git push https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git HEAD:${TRAVIS_BRANCH}
 notifications:
   email:
