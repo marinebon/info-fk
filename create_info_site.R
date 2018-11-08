@@ -36,5 +36,6 @@ library(infographiq)
 Sys.setenv(RSTUDIO_PANDOC="/home/tylar/R/x86_64-pc-linux-gnu-library/3.4/pander/")
 
 infographiq::create_info_site(
-    render_modals = T
+    render_modals = T,
+    preview_site = F
 )
