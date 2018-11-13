@@ -1,0 +1,46 @@
+,svg,svg_id,label,status_text,status_color,modal_before,modal_after
+,corals.svg,biodiversity,Biodiversity,,,NA,NA
+,corals.svg,blenny,Small reef fish (trophic group),,,NA,NA
+,corals.svg,carib-spiny-lobster,Caribbean Spiny Lobster (focal),,,NA,NA
+,corals.svg,cyano,Cyanobacteria,,,NA,NA
+,corals.svg,damselfish,Higher Level Reef Fish (trophic group),,,NA,NA
+,corals.svg,diadema,Black Sea Urchin (keystone),,,NA,NA
+,corals.svg,exploited-species,Exploited Reef Fish (focal),,,NA,NA
+,corals.svg,forage-fish,Forage Fish (trophic group),,,NA,NA
+,corals.svg,grouper-snapper-complex,Grouper-Snapper Complex (trophic group),,,NA,NA
+,corals.svg,grunt,Grunt (trophic group),,,NA,NA
+,corals.svg,jacks,Jacks (trophic group),,,NA,NA
+,corals.svg,lionfish,Lionfish (invasive),,,NA,NA
+,corals.svg,macroalgae,Macroalgae,,,NA,NA
+,corals.svg,parrotfish,Parrotfish (trophic group),,,NA,prep/plot_caption/parrotfish.Rmd
+,corals.svg,queen-conch,Queen Conch (focal),,,NA,NA
+,corals.svg,rays,Rays (trophic group),,,NA,NA
+,corals.svg,sharks,Sharks (trophic group),,,NA,NA
+,corals.svg,soft-coral,Soft Corals (foundation),,,NA,NA
+,corals.svg,sponge,Sponges,,,NA,NA
+,corals.svg,stony-coral,Stony Corals (foundation),,,NA,NA
+,corals.svg,trophic-pyramid,Trophic Level Pyramid,,,NA,NA
+,corals.svg,zoanthidea,Zoanthids,,,NA,NA
+,mangroves.svg,anemone,Anemone,,,NA,NA
+,mangroves.svg,aquatic-crabs,,,,NA,NA
+,mangroves.svg,carib-spiny-lobster,Caribbean Spiny Lobster,,,NA,NA
+,mangroves.svg,grouper-snapper-complex,Grouper,,,NA,NA
+,mangroves.svg,mangroves,,,,NA,NA
+,mangroves.svg,small-mangrove-fish,,,,NA,NA
+,mangroves.svg,terrestrial-crabs,,,,NA,NA
+,pelagic.svg,forage-fish,Forage Fish,,,NA,NA
+,pelagic.svg,macroalgae,Macroalgae,,,NA,NA
+,pelagic.svg,mahi,,,,NA,NA
+,pelagic.svg,micro-organisms,,,,NA,NA
+,pelagic.svg,sailfish,,,,NA,NA
+,pelagic.svg,sea-turtle,Sea Turtle,,,NA,NA
+,seagrass.svg,anemone,Anemone,,,NA,NA
+,seagrass.svg,lionfish,,,,NA,NA
+,seagrass.svg,long-spinned-black-sea-urchin,,,,NA,NA
+,seagrass.svg,mangroves,,,,NA,NA
+,seagrass.svg,other corals,,,,NA,NA
+,seagrass.svg,queen-conch,Queen Conch,,,NA,NA
+,seagrass.svg,snapper,Snapper,,,NA,NA
+,seagrass.svg,tarpon,,,,NA,NA
+,seagrass.svg,yellowtail-snapper,Yellowtail Snapper,,,NA,NA
+,corals.svg,sst,Sea Surface Temperature,,,NA,NA
