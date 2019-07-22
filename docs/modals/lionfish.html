@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -5950,9 +5951,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -5977,11 +5976,12 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -6039,20 +6039,17 @@ button.code-folding-btn:focus {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -6066,10 +6063,10 @@ $(document).ready(function () {
 
 
 <p><base target="_parent"></p>
-<div id="htmlwidget-e2b631e1457c3c5c8d1d" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e2b631e1457c3c5c8d1d">{"x":{"attrs":{"axes":{"x":{"valueRange":["2010-01-01","2018-11-13"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Density per 177m^2":{"axis":"y","strokeWidth":2}},"title":"Lionfish Density","labels":["year","Mean Density per 177m^2"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Density per 177m^2","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.649701263784699,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.547628853586889,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":0.44555644338908,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.426136363636364,0.581168831168831,0.65,0.453224489795918,0.627614583333333]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
-<div id="htmlwidget-2b97fa8178e75aa4993b" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2b97fa8178e75aa4993b">{"x":{"attrs":{"axes":{"x":{"valueRange":["2010-01-01","2018-11-13"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Biomass (g/40Mm^2)":{"axis":"y","strokeWidth":2}},"title":"Lionfish Biomass","labels":["year","Mean Biomass (g/40Mm^2)"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Biomass (g/40Mm^2)","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.137807713264712,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.0925277910328842,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":0.0472478688010566,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.0273148974704952,0.0662243448365351,0.121742690837897,0.108475755010801,0.138881267008693]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-f58f909a0ef7a32bb5e4" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f58f909a0ef7a32bb5e4">{"x":{"attrs":{"axes":{"x":{"valueRange":["2010-01-01","2019-07-22"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Density per 177m^2":{"axis":"y","strokeWidth":2}},"title":"Lionfish Density","labels":["year","Mean Density per 177m^2"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Density per 177m^2","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.649701263784699,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.547628853586889,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":0.44555644338908,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.426136363636364,0.581168831168831,0.65,0.453224489795918,0.627614583333333]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-2a2fbc13723334a488c9" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2a2fbc13723334a488c9">{"x":{"attrs":{"axes":{"x":{"valueRange":["2010-01-01","2019-07-22"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Biomass (g/40Mm^2)":{"axis":"y","strokeWidth":2}},"title":"Lionfish Biomass","labels":["year","Mean Biomass (g/40Mm^2)"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Biomass (g/40Mm^2)","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.137807713264712,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.0925277910328842,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":0.0472478688010566,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.0273148974704952,0.0662243448365351,0.121742690837897,0.108475755010801,0.138881267008693]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
 
 
 
@@ -6088,6 +6085,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

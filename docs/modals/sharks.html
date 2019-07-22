@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -5950,9 +5951,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -5977,11 +5976,12 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -6039,20 +6039,17 @@ button.code-folding-btn:focus {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -6066,12 +6063,12 @@ $(document).ready(function () {
 
 
 <p><base target="_parent"></p>
-<div id="htmlwidget-fae3c13105815df69d2b" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fae3c13105815df69d2b">{"x":{"attrs":{"axes":{"x":{"valueRange":["1999-01-01","2018-11-13"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Density per 177m^2":{"axis":"y","strokeWidth":2}},"title":"Sharks Density","labels":["year","Mean Density per 177m^2"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Density per 177m^2","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.00576278831484325,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.00287071617702729,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":-2.13559607886811e-05,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["1999-01-01T00:00:00.000Z","2000-01-01T00:00:00.000Z","2001-01-01T00:00:00.000Z","2002-01-01T00:00:00.000Z","2003-01-01T00:00:00.000Z","2004-01-01T00:00:00.000Z","2005-01-01T00:00:00.000Z","2006-01-01T00:00:00.000Z","2007-01-01T00:00:00.000Z","2008-01-01T00:00:00.000Z","2009-01-01T00:00:00.000Z","2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.00144406048330118,0.00211627249532941,0.00299489455669937,0.0123086452800368,0.00180739054068794,0.0010191300411155,0.00315820443353267,0.00206150113460791,0.00156371891178208,0.00149659644268126,0.00111590724956137,0.00131589118638518,0.0014787888671416,0.00120840902245488,0.00450776065548727,0.00633428753163215]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
-<div id="htmlwidget-900a9c9b637547b68ca4" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
-<script type="application/json" data-for="htmlwidget-900a9c9b637547b68ca4">{"x":{"attrs":{"axes":{"x":{"valueRange":["1999-01-01","2018-11-13"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Biomass (g/40Mm^2)":{"axis":"y","strokeWidth":2}},"title":"Sharks Biomass","labels":["year","Mean Biomass (g/40Mm^2)"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Biomass (g/40Mm^2)","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.308073780623398,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.114588294226298,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":-0.0788971921708026,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["1999-01-01T00:00:00.000Z","2000-01-01T00:00:00.000Z","2001-01-01T00:00:00.000Z","2002-01-01T00:00:00.000Z","2003-01-01T00:00:00.000Z","2004-01-01T00:00:00.000Z","2005-01-01T00:00:00.000Z","2006-01-01T00:00:00.000Z","2007-01-01T00:00:00.000Z","2008-01-01T00:00:00.000Z","2009-01-01T00:00:00.000Z","2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.0154664208643632,0.0272668997890495,0.0479817740278092,0.813170982111551,0.119042946821516,0.0333464545617218,0.0495393552526686,0.0825295209782087,0.0655344249122375,0.060053559168843,0.0525020898585154,0.0329501994189683,0.0464171176613916,0.0198595534917011,0.165934257363622,0.201817151338594]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
-<div id="htmlwidget-e0dfbb46f66fdeacbdc6" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e0dfbb46f66fdeacbdc6">{"x":{"attrs":{"axes":{"x":{"valueRange":["1999-01-01","2018-11-13"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Effective Number of Species":{"axis":"y","strokeWidth":2}},"title":"Sharks Richness","labels":["year","Effective Number of Species"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Effective Number of Species","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":3.65604164682162,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":2.5625,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":1.46895835317838,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["1999-01-01T00:00:00.000Z","2000-01-01T00:00:00.000Z","2001-01-01T00:00:00.000Z","2002-01-01T00:00:00.000Z","2003-01-01T00:00:00.000Z","2004-01-01T00:00:00.000Z","2005-01-01T00:00:00.000Z","2006-01-01T00:00:00.000Z","2007-01-01T00:00:00.000Z","2008-01-01T00:00:00.000Z","2009-01-01T00:00:00.000Z","2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[3,1,3,4,3,3,2,1,3,3,4,1,1,2,3,4]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-ff4bc5a38f34c1f4d6a7" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ff4bc5a38f34c1f4d6a7">{"x":{"attrs":{"axes":{"x":{"valueRange":["1999-01-01","2019-07-22"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Density per 177m^2":{"axis":"y","strokeWidth":2}},"title":"Sharks Density","labels":["year","Mean Density per 177m^2"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Density per 177m^2","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.00576278831484325,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.00287071617702729,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":-2.13559607886811e-05,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["1999-01-01T00:00:00.000Z","2000-01-01T00:00:00.000Z","2001-01-01T00:00:00.000Z","2002-01-01T00:00:00.000Z","2003-01-01T00:00:00.000Z","2004-01-01T00:00:00.000Z","2005-01-01T00:00:00.000Z","2006-01-01T00:00:00.000Z","2007-01-01T00:00:00.000Z","2008-01-01T00:00:00.000Z","2009-01-01T00:00:00.000Z","2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.00144406048330118,0.00211627249532941,0.00299489455669937,0.0123086452800368,0.00180739054068794,0.0010191300411155,0.00315820443353267,0.00206150113460791,0.00156371891178208,0.00149659644268126,0.00111590724956137,0.00131589118638518,0.0014787888671416,0.00120840902245488,0.00450776065548727,0.00633428753163215]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-070413761757b1835fb9" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-070413761757b1835fb9">{"x":{"attrs":{"axes":{"x":{"valueRange":["1999-01-01","2019-07-22"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Mean Biomass (g/40Mm^2)":{"axis":"y","strokeWidth":2}},"title":"Sharks Biomass","labels":["year","Mean Biomass (g/40Mm^2)"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Mean Biomass (g/40Mm^2)","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":0.308073780623398,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":0.114588294226298,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":-0.0788971921708026,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["1999-01-01T00:00:00.000Z","2000-01-01T00:00:00.000Z","2001-01-01T00:00:00.000Z","2002-01-01T00:00:00.000Z","2003-01-01T00:00:00.000Z","2004-01-01T00:00:00.000Z","2005-01-01T00:00:00.000Z","2006-01-01T00:00:00.000Z","2007-01-01T00:00:00.000Z","2008-01-01T00:00:00.000Z","2009-01-01T00:00:00.000Z","2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[0.0154664208643632,0.0272668997890495,0.0479817740278092,0.813170982111551,0.119042946821516,0.0333464545617218,0.0495393552526686,0.0825295209782087,0.0655344249122375,0.060053559168843,0.0525020898585154,0.0329501994189683,0.0464171176613916,0.0198595534917011,0.165934257363622,0.201817151338594]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
+<div id="htmlwidget-297d7c7358d1c9b196c3" style="width:100%;height:480px;" class="dygraphs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-297d7c7358d1c9b196c3">{"x":{"attrs":{"axes":{"x":{"valueRange":["1999-01-01","2019-07-22"],"pixelsPerLabel":35,"axisLabelFormatter":"function(d) { return d.getFullYear() }","drawAxis":true},"y":{"drawAxis":true}},"series":{"Effective Number of Species":{"axis":"y","strokeWidth":2}},"title":"Sharks Richness","labels":["year","Effective Number of Species"],"legend":"auto","retainDateWindow":false,"colors":["red","red"],"xlabel":"Year","ylabel":"Effective Number of Species","stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":true,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"disableZoom":false},"scale":"yearly","annotations":[],"shadings":[],"events":[{"pos":3.65604164682162,"label":"+1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"},{"pos":2.5625,"label":"mean","labelLoc":"left","color":"green","strokePattern":[7,3],"axis":"y"},{"pos":1.46895835317838,"label":"-1sd","labelLoc":"left","color":"green","strokePattern":[1,0],"axis":"y"}],"format":"date","data":[["1999-01-01T00:00:00.000Z","2000-01-01T00:00:00.000Z","2001-01-01T00:00:00.000Z","2002-01-01T00:00:00.000Z","2003-01-01T00:00:00.000Z","2004-01-01T00:00:00.000Z","2005-01-01T00:00:00.000Z","2006-01-01T00:00:00.000Z","2007-01-01T00:00:00.000Z","2008-01-01T00:00:00.000Z","2009-01-01T00:00:00.000Z","2010-01-01T00:00:00.000Z","2011-01-01T00:00:00.000Z","2012-01-01T00:00:00.000Z","2014-01-01T00:00:00.000Z","2016-01-01T00:00:00.000Z"],[3,1,3,4,3,3,2,1,3,3,4,1,1,2,3,4]],"fixedtz":false,"tzone":"UTC"},"evals":["attrs.axes.x.axisLabelFormatter"],"jsHooks":[]}</script>
 
 
 
@@ -6090,6 +6087,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
